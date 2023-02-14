@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS order_dishes CASCADE;
+CREATE TABLE order_dishes (
+  id SERIAL PRIMARY KEY NOT NULL,
+  order_id INTEGER REFERENCES users(id) NOT NULL,
+  dish_id INTEGER REFERENCES dishes(id) NOT NULL
+);
