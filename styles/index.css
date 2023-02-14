@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 nav {
   position: fixed;
@@ -7,15 +8,16 @@ nav {
   width: 100vw;
   z-index: 1;
   height: 120px;
-  background-color: #89cff0;
+  background-color: black;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: white;
 }
-#log-register {
+#nav-links {
   display: flex;
   justify-content: space-between;
-  width: 120px;
+  width: 350px;
   padding: 10px;
 }
 .dish {
@@ -27,29 +29,89 @@ nav {
   border-radius: 30%;
   margin-right: 20px;
 }
+
 ul {
   list-style: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
+  /* display: flex;
+  justify-content: space-evenly; */
 }
 li {
   display: flex;
   align-items: center;
   width: 50%;
 }
-.menu-cart {
-  display: flex;
-  margin: 10px;
+.rest-info{
   margin-top: 120px;
 }
-.menu {
-  width: 70%;
+
+.rest-info, .menu{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.cart {
+
+.main-content {
+  width: 100%;
+}
+/* .cart {
   width: 30%;
   display: flex;
   justify-content: center;
   border: lightslategray 1px solid;
+} */
+a {
+  text-decoration: none;
+  color: white;
+}
+
+#nav-icons {
+  width: 135px;
+  display: flex;
+  margin: 10px;
+  justify-content: space-around;
+  font-size: 25px;
+}
+
+.menu-item{
+  width: 30%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.add-to-cart{
+  margin-left:10px;
+  border: none;
+  background-color: transparent;
+  color: rgb(0, 185, 0);
+  font-size: large;
+}
+
+#nav-logo{
+  font-family: 'Italiana', serif;
+
+}
+h2, h3{
+  font-family: 'Italiana', serif;
+}
+.dish-item{
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+ul{
+  display: flex;
+}
+
+.add-to-cart :hover{
+color: #e9f50a;
+}
+
+#footer{
+  background-color: black;
+  color: white;
+
 }
