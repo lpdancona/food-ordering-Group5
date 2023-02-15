@@ -25,12 +25,6 @@ const renderDishes = function(dishes, id) {
   });
 };
 
-const loadDishes = function(callback) {
-  $.get("/api/dishes/main")
-    .then((response) => callback(response.dishes, "#mains"));
-  console.log('work');
-};
-
 
 const buttonListeners = function(cart) {
   const buttons = document.querySelectorAll(".menu-item button");
@@ -156,13 +150,5 @@ $(document).ready(function() {
 
   Promise.all([promise1, promise2, promise3]).then(() => {
     buttonListeners(cart);
-  });
-
-  $.ajax({
-    method: 'GET',
-    url: '/api/orders/1'
-  })
-  .done(response => {
-    console.log(response);
   });
 });
