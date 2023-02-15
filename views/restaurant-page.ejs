@@ -26,6 +26,7 @@
     <!-- scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
+    <script src="/scripts/admin.js"></script>
     <title>Restaurant Page</title>
   </head>
   <body>
@@ -44,65 +45,14 @@
         <thead>
           <tr>
             <th class="order-number">Order ID</th>
+            <th class="order-dishes">Dishes</th>
             <th class="order-total">Total</th>
             <th class="order-actions">Ready At</th>
+            <th class="order-button">Confirm</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr class="order">
-            <td class="order-number" data-title="Order">
-              <p>#4</p>
-            </td>
-            <!-- <td class="order-status" data-title="Status">On-hold</td> -->
-
-            <td class="order-total" data-title="Total">
-              <span class="amount">17.00</span>
-            </td>
-
-            <td class="order-actions" data-title="Action">
-              <div id="time">
-                <label for="appt">Select a time:</label>
-                <input type="time" id="appt" name="appt" />
-              </div>
-            </td>
-          </tr>
-
-          <tr class="order">
-            <td class="order-number" data-title="Order">
-              <p>#3</p>
-            </td>
-            <!-- <td class="order-status" data-title="Status">On-hold</td> -->
-
-            <td class="order-total" data-title="Total">
-              <span class="amount">17.00</span>
-            </td>
-
-            <td class="order-actions" data-title="Action">
-              <div id="time">
-                <label for="appt">Select a time:</label>
-                <input type="time" id="appt" name="appt" />
-              </div>
-            </td>
-          </tr>
-
-          <tr class="order">
-            <td class="order-number" data-title="Order">
-              <p>#2</p>
-            </td>
-            <!-- <td class="order-status" data-title="Status">On-hold</td> -->
-
-            <td class="order-total" data-title="Total">
-              <span class="amount">17.00</span>
-            </td>
-
-            <td class="order-actions" data-title="Action">
-              <div id="time">
-                <label for="appt">Select a time:</label>
-                <input type="time" id="appt" name="appt" />
-              </div>
-            </td>
-          </tr>
         </tbody>
       </table>
     </div>
