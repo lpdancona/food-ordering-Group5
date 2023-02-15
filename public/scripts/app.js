@@ -101,4 +101,12 @@ $(document).ready(function() {
   Promise.all([promise1, promise2, promise3]).then(() => {
     buttonListeners(cart);
   });
+
+  $.ajax({
+    method: 'GET',
+    url: '/api/orders/1'
+  })
+  .done(response => {
+    console.log(response);
+  });
 });
