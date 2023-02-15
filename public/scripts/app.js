@@ -32,6 +32,16 @@ $(document).ready(function() {
   if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
   }
+  $("#item-container").addClass("blackout");
+
+  $( "#nav-icons" ).click(function() {
+    alert( "Handler for .click() called." );
+    if($("#item-container").hasClass("blackout")){
+      $("#item-container").removeClass("blackout").addClass("whiteout");
+    } else {
+      $("#item-container").removeClass("whiteout").addClass("blackout");
+    }
+  });
 
   console.log(cart);
 
