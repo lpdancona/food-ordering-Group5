@@ -27,6 +27,7 @@
 
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script type="text/javascript" src="/scripts/home-db.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
   </head>
@@ -57,182 +58,21 @@
         <h2 id="menu-start">MAINS</h2>
         <table>
           <ul>
-            <div class="dish-item">
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Spaghetti</h3>
-                  <p>
-                    Restaurant crafted pasta served with creamy, hearty tomato
-                    sauce and leafy greens.
-                  </p>
-                </div>
-                <div class="price">
-                  <p>20.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="1">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Spaghetti</h3>
-                  <p>
-                    Restaurant crafted pasta served with creamy, hearty tomato
-                    sauce and leafy greens.
-                  </p>
-                </div>
-                <div class="price">
-                  <p>20.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="2">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Spaghetti</h3>
-                  <p>
-                    Restaurant crafted pasta served with creamy, hearty tomato
-                    sauce and leafy greens.
-                  </p>
-                </div>
-                <div class="price">
-                  <p>20.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="3">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Spaghetti</h3>
-                  <p>
-                    Restaurant crafted pasta served with creamy, hearty tomato
-                    sauce and leafy greens.
-                  </p>
-                </div>
-                <div class="price">
-                  <p>20.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="4">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Spaghetti</h3>
-                  <p>
-                    Restaurant crafted pasta served with creamy, hearty tomato
-                    sauce and leafy greens.
-                  </p>
-                </div>
-                <div class="price">
-                  <p>20.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="5">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
+            <div class="dish-item" id="mains">
             </div>
           </ul>
         </table>
-        <h2>APPERTIZERS</h2>
+        <h2>APPETIZERS</h2>
         <table>
           <ul>
-            <div class="dish-item">
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>BURRATA, PROSCIUTTO</h3>
-                  <p>
-                    seasonal garnish
-
-                  </p>
-                </div>
-                <div class="price">
-                  <p>10.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="1">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>BURRATA, PROSCIUTTO</h3>
-                  <p>
-                    seasonal garnish
-                  </p>
-                </div>
-                <div class="price">
-                  <p>10.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="2">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>BURRATA, PROSCIUTTO</h3>
-                  <p>
-                    seasonal garnish
-                  </p>
-                </div>
-                <div class="price">
-                  <p>10.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="3">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>BURRATA, PROSCIUTTO</h3>
-                  <p>
-                    seasonal garnish
-                  </p>
-                </div>
-                <div class="price">
-                  <p>10.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="4">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
+            <div class="dish-item" id="appetizers">
             </div>
           </ul>
         </table>
         <h2>DESSERTS</h2>
         <table>
           <ul>
-            <div class="dish-item">
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Premium Milkshakes</h3>
-                  <p>
-                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum odio amet iste provident iusto commodi repellat unde, maxime laudantium error adipisci quas recusandae culpa minus eum magnam exercitationem est repudiandae.
-
-                  </p>
-                </div>
-                <div class="price">
-                  <p>17.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="1">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
-              <li class="menu-item">
-                <div class="dish-desc">
-                  <h3>Premium Milkshakes</h3>
-                  <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi ratione suscipit ipsa qui explicabo ipsam vel tenetur pariatur odit assumenda, architecto facere quisquam! Ipsam ullam doloribus quo dolor amet sed!
-                  </p>
-                </div>
-                <div class="price">
-                  <p>17.00</p>
-                </div>
-                <button class="add-to-cart" name="add-to-cart" data-id="2">
-                  <i class="fa-solid fa-plus"></i>
-                </button>
-              </li>
+            <div class="dish-item" id="desserts">
             </div>
           </ul>
         </table>
