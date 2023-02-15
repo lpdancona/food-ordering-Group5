@@ -38,7 +38,7 @@ const buttonListeners = function(cart) {
     $(button).click(function() {
       const id = this.dataset.id;
       const name = this.parentElement.querySelector(".dish-desc h3").innerHTML;
-      const price = Number(this.parentElement.querySelector(".price p").innerHTML);
+      const price = Number((this.parentElement.querySelector(".price p").innerHTML).replace("$", ""));
 
       addToCart(cart, id, { name, price });
     })
@@ -72,8 +72,8 @@ $(document).ready(function() {
     })
     .done(response => {
       renderDishes(response.dishes, "#mains");
+      resolve();
     });
-    resolve();
   });
 
   const promise2 = new Promise((resolve, reject) => {
@@ -83,8 +83,8 @@ $(document).ready(function() {
     })
     .done(response => {
       renderDishes(response.dishes, "#appetizers");
+      resolve();
     });
-    resolve();
   });
 
   const promise3 = new Promise((resolve, reject) => {
@@ -94,14 +94,11 @@ $(document).ready(function() {
     })
     .done(response => {
       renderDishes(response.dishes, "#desserts");
+      resolve();
     });
-    resolve();
   });
 
   Promise.all([promise1, promise2, promise3]).then(() => {
-    setTimeout(() => {
-      buttonListeners(cart);
-    }, 2000);
-    // buttonListeners(cart);
+    buttonListeners(cart);
   });
 });
