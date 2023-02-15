@@ -48,12 +48,9 @@ app.use("/api/dishes", dishesRoutes);
 app.get("/", (req, res) => {
   res.render("index");
 });
-app.get("/login/:id", (req, res) => {
-  const userId = req.params.id;
-  console.log(userId);
-  res.send(`logged in as ${userId}`);
+app.get("/admin", (req, res) => {
+  res.render("restaurant-page");
 });
-
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
