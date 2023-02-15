@@ -28,30 +28,33 @@
     <!-- Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script>
   </head>
   <body>
     <nav>
       <div id="nav-links">
-        <span id="nav-logo">delivery app</span>
-        <a href="">Login</a>
-        <a href="">Sign Up</a>
-        <a href="">Menu</a>
-        <a href="#footer">Contact</a>
+        <iconify-icon icon="mdi:lighthouse" id="lighthouse"></iconify-icon>
+        <span id="nav-logo">Lighthouse Delivery</span>
+        <div class="nav-login">
+        <a class="login" href="">Login</a>
+        <a class="signup" href="">Sign Up</a>
+        <a class="menu" href="#menu-start">Menu</a>
+        <a class="contact" href="#footer">Contact</a>
+      </div>
       </div>
       <div id="nav-icons">
-        <i class="fa-brands fa-instagram"></i>
-        <i class="fa-brands fa-facebook-f"></i>
-        <i class="fa-brands fa-twitter"></i>
         <i class="fa-solid fa-cart-shopping"></i>
       </div>
     </nav>
     <div class="main-content">
       <div class="rest-info">
-        <h2>Restaurant's Name</h2>
-        <h4>open hours: mon-fri 10am - 8pm sat-sun 10am - 10pm</h4>
+        <h2>Il Ristorante di Enzo</h2>
+        <h4>Open Hours: MON - THUR 4:00 - 9:00
+          FRI - SAT 11:30 - 10:00
+          SUN 11:30 - 9:00</h4>
       </div>
-      <div class="menu">
-        <h2>Mains</h2>
+      <div id="menu">
+        <h2 id="menu-start">MAINS</h2>
         <table>
           <ul>
             <div class="dish-item">
@@ -133,13 +136,140 @@
             </div>
           </ul>
         </table>
+        <h2>APPERTIZERS</h2>
+        <table>
+          <ul>
+            <div class="dish-item">
+              <li class="menu-item">
+                <div class="dish-desc">
+                  <h3>BURRATA, PROSCIUTTO</h3>
+                  <p>
+                    seasonal garnish
+
+                  </p>
+                </div>
+                <div class="price">
+                  <p>10.00</p>
+                </div>
+                <button class="add-to-cart" name="add-to-cart" data-id="1">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </li>
+              <li class="menu-item">
+                <div class="dish-desc">
+                  <h3>BURRATA, PROSCIUTTO</h3>
+                  <p>
+                    seasonal garnish
+                  </p>
+                </div>
+                <div class="price">
+                  <p>10.00</p>
+                </div>
+                <button class="add-to-cart" name="add-to-cart" data-id="2">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </li>
+              <li class="menu-item">
+                <div class="dish-desc">
+                  <h3>BURRATA, PROSCIUTTO</h3>
+                  <p>
+                    seasonal garnish
+                  </p>
+                </div>
+                <div class="price">
+                  <p>10.00</p>
+                </div>
+                <button class="add-to-cart" name="add-to-cart" data-id="3">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </li>
+              <li class="menu-item">
+                <div class="dish-desc">
+                  <h3>BURRATA, PROSCIUTTO</h3>
+                  <p>
+                    seasonal garnish
+                  </p>
+                </div>
+                <div class="price">
+                  <p>10.00</p>
+                </div>
+                <button class="add-to-cart" name="add-to-cart" data-id="4">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </li>
+            </div>
+          </ul>
+        </table>
+        <h2>DESSERTS</h2>
+        <table>
+          <ul>
+            <div class="dish-item">
+              <li class="menu-item">
+                <div class="dish-desc">
+                  <h3>Premium Milkshakes</h3>
+                  <p>
+                   Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum odio amet iste provident iusto commodi repellat unde, maxime laudantium error adipisci quas recusandae culpa minus eum magnam exercitationem est repudiandae.
+
+                  </p>
+                </div>
+                <div class="price">
+                  <p>17.00</p>
+                </div>
+                <button class="add-to-cart" name="add-to-cart" data-id="1">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </li>
+              <li class="menu-item">
+                <div class="dish-desc">
+                  <h3>Premium Milkshakes</h3>
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi ratione suscipit ipsa qui explicabo ipsam vel tenetur pariatur odit assumenda, architecto facere quisquam! Ipsam ullam doloribus quo dolor amet sed!
+                  </p>
+                </div>
+                <div class="price">
+                  <p>17.00</p>
+                </div>
+                <button class="add-to-cart" name="add-to-cart" data-id="2">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </li>
+            </div>
+          </ul>
+        </table>
+
       </div>
       <!-- <div class="cart"><h3 id="">CART</h3></div> -->
     </div>
     <footer id="footer">
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum impedit
-      quae quis mollitia delectus natus alias sequi dolor, in animi possimus
-      qui? Officiis ipsam ducimus, nobis ad veniam hic libero.
+      <div class="restaurant-footer">
+        <div class="visit-us">
+          <h3>VISIT US:</h3>
+          <p>
+            4132 beautiful street<br />
+            Vancouver, BC, V5Q6V7
+          </p>
+        </div>
+        <div class="hours">
+          <h3>
+            HOURS<br />
+            DINING & TAKEOUT
+          </h3>
+          <p>
+            MONDAY - THURSDAY 4:00 - 9:00<br />
+            FRIDAY - SATURDAY 11:30 - 10:00<br />
+            SUNDAY 11:30 - 9:00
+          </p>
+        </div>
+        <div class="social" >
+          <h3>LET'S GET SOCIAL</h3>
+          <div class="footer-icons">
+          <i class="fa-brands fa-square-instagram"></i>
+          <i class="fa-brands fa-square-facebook"></i>
+          <i class="fa-brands fa-square-twitter"></i>
+        </div>
+        </div>
+      </div>
+      <p class="copyrigth">&#169 2023 DeliveryApp, All Rights Reserved</p>
     </footer>
   </body>
 </html>
