@@ -191,3 +191,12 @@ ul {
 .whiteout{
   display: block;
 }
+
+#item-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 65px;
+  left: 0;
+  z-index: 10;
+}

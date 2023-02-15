@@ -74,8 +74,8 @@ const createShoppingCart = function() {
   const $dishType = $('<span>').text('Main');
   const $quantityContainer = $('<div>').addClass('quantity');
   const $plusBtn = $('<button type="button">').addClass('plus-btn').attr('name','button');
-  const $plusIcon = $('<i>').addClass('fa-solid fa-plu');
-  const $input = $('<input type="text">').attr('name', 'name').text(1);
+  const $plusIcon = $('<i>').addClass('fa-solid fa-plus');
+  const $input = $('<input type="text">').attr('name', 'name').attr('value', '1');
   const $minusBtn = $('<button type="button">').addClass('minus-btn').attr('name','button');
   const $minusIcon = $('<i>').addClass('fa-solid fa-minus');
   const $dishCost = $('<div>').addClass('total-price').text('$549');
@@ -94,8 +94,10 @@ const createShoppingCart = function() {
 };
 
 const showShoppingCart =  function(){
+  const $itemContainer = $('#item-container');
+  $itemContainer.empty();
   const cart = createShoppingCart();
-  $('#item-container').append(cart);
+  $itemContainer.append(cart);
 };
 
 
