@@ -14,27 +14,44 @@ nav {
   justify-content: space-between;
   color: white;
 }
+#lighthouse {
+  font-size: 80px;
+  margin-left: 10px;
+}
+#nav-logo {
+  font-size: large;
+}
+.login,
+.signup,
+.menu,
+.contact {
+  margin-left: 40px;
+}
+.signup {
+  white-space: nowrap;
+}
 #nav-links {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 350px;
-  padding: 10px;
 }
-#nav-links :hover {
+.nav-login {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 350px;
+}
+.nav-login :hover {
   color: #89cff0;
   border-bottom: #89cff0 2px solid;
 }
-.fa-instagram:hover {
-  color: #b727c0;
-}
-.fa-facebook-f:hover {
-  color: #4967aa;
-}
-.fa-twitter:hover {
-  color: #50abf1;
-}
 .fa-cart-shopping:hover {
-  color: #00b900;
+  color: #5ad45a;
+}
+.fa-cart-shopping {
+  margin-right: 20px;
+  font-size: 40px;
 }
 .dish {
   border: #89cff0 3px solid;
@@ -61,7 +78,8 @@ li {
 }
 
 .rest-info,
-.menu {
+#menu {
+  margin-bottom: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -129,5 +147,40 @@ ul {
 #footer {
   background-color: black;
   color: white;
-  height: 150px;
+  height: 350px;
+  margin-bottom: 0;
+  width: 100%;
+}
+.restaurant-footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+.footer-icons {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 30px;
+}
+.fa-square-instagram:hover {
+  color: #b727c0;
+}
+.fa-square-facebook:hover {
+  color: #4967aa;
+}
+.fa-square-twitter:hover {
+  color: #50abf1;
+}
+.visit-us,
+.hours,
+.social {
+  margin-top: 30px;
+}
+.copyrigth {
+  font-size: small;
+  text-align: center;
+  margin-top: 5%;
+}
+.price {
+  margin-left: 10px;
 }
