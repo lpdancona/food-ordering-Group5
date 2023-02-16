@@ -53,9 +53,8 @@ const addToCart = (cart, id, product) => {
   console.log(cart);
 };
 
-const createShoppingCart = function() {
-  const $shoppingCartContainer = $('<div>').addClass('shopping-cart');
-  const $title = $('<div>').addClass('title').text('Shopping Cart');
+const createCartItem = function (){
+
   const $item = $('<div>').addClass('item');
   const $deleteBtnDiv = $('<div>').addClass('buttons');
   const $deleteBtn = $('<span>').addClass('delete-btn');
@@ -73,7 +72,7 @@ const createShoppingCart = function() {
   const $minusBtn = $('<button type="button">').addClass('minus-btn').attr('name','button');
   const $minusIcon = $('<i>').addClass('fa-solid fa-minus');
   const $dishCost = $('<div>').addClass('total-price').text('$549');
-  
+
   $deleteBtn.append($deleteIcon);
   $deleteBtnDiv.append($deleteBtn);
   $imageDiv.append($dishImage);
@@ -82,6 +81,15 @@ const createShoppingCart = function() {
   $minusBtn.append($minusIcon);
   $quantityContainer.append($plusBtn,$input,$minusBtn,$dishCost);
   $item.append($deleteBtnDiv, $imageDiv, $descriptionDiv, $quantityContainer);
+
+  return $item;
+
+}
+
+const createShoppingCart = function() {
+  const $shoppingCartContainer = $('<div>').addClass('shopping-cart');
+  const $title = $('<div>').addClass('title').text('Shopping Cart');
+  const $item = createCartItem();
   $shoppingCartContainer.append($title,$item);
 
   return $shoppingCartContainer;
@@ -152,3 +160,7 @@ $(document).ready(function() {
     buttonListeners(cart);
   });
 });
+/**
+ * TODO: CREATE SEPARATE FUNCTION TO ADD ITEMS TO CART: done
+ * PULL DATA FROM DATABASE TO POPULATE CART ITEMS
+ */
