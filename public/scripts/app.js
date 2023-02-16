@@ -25,6 +25,7 @@ const renderDishes = function(dishes, id) {
   });
 };
 
+
 const buttonListeners = function(cart) {
   const buttons = document.querySelectorAll(".menu-item button");
 
@@ -49,8 +50,65 @@ const addToCart = (cart, id, product) => {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  console.log(cart);
+
 };
+
+const createCartItem = function (cart){
+
+  const $item = $('<div>').addClass('item');
+  const $deleteBtnDiv = $('<div>').addClass('buttons');
+  const $deleteBtn = $('<span>').addClass('delete-btn');
+  const $deleteIcon = $('<i>').addClass('fa-solid fa-x');
+
+  const $descriptionDiv = $('<div>').addClass("description");
+  const $dishName = $('<span>').text(cart.name);
+  const $quantityContainer = $('<div>').addClass('quantity');
+  const $plusBtn = $('<button type="button">').addClass('plus-btn').attr('name','button');
+  const $plusIcon = $('<i>').addClass('fa-solid fa-plus');
+  const $input = $('<input type="text">').attr('name', 'name').attr('value', cart.qty);
+  const $minusBtn = $('<button type="button">').addClass('minus-btn').attr('name','button');
+  const $minusIcon = $('<i>').addClass('fa-solid fa-minus');
+  const $dishCost = $('<div>').addClass('total-price').text(cart.price);
+  console.log(cart);
+
+  $deleteBtn.append($deleteIcon);
+  $deleteBtnDiv.append($deleteBtn);
+  $descriptionDiv.append($dishName);
+  $plusBtn.append($plusIcon);
+  $minusBtn.append($minusIcon);
+  $quantityContainer.append($plusBtn,$input,$minusBtn,$dishCost);
+  $item.append($deleteBtnDiv, $descriptionDiv, $quantityContainer);
+
+  return $item;
+
+}
+
+const createShoppingCart = function() {
+
+  const $shoppingCartContainer = $('<div>').addClass('shopping-cart');
+  const $title = $('<div>').addClass('title').text('Shopping Cart');
+  let cart = {};
+  $shoppingCartContainer.append($title);
+  if (localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart"));
+    for (id in cart){
+      let $item = createCartItem(cart[id]);
+      $shoppingCartContainer.append($item);
+    }
+
+  }
+
+  
+  return $shoppingCartContainer;
+};
+
+const showShoppingCart =  function(){
+  const $itemContainer = $('#item-container');
+  $itemContainer.empty();
+  const shoppingCart = createShoppingCart();
+  $itemContainer.append(shoppingCart);
+};
+
 
 $(document).ready(function() {
   let cart = {};
@@ -58,6 +116,18 @@ $(document).ready(function() {
   if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
   }
+  $("#item-container").addClass("blackout");
+
+  $( "#nav-icons" ).click(function() {
+    showShoppingCart();
+    if($("#item-container").hasClass("blackout")){
+      $("#item-container").removeClass("blackout").addClass("whiteout");
+    } else {
+      $("#item-container").removeClass("whiteout").addClass("blackout");
+    }
+  });
+
+  
 
   const promise1 = new Promise((resolve, reject) => {
     $.ajax({
