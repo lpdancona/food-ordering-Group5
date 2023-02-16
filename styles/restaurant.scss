@@ -145,7 +145,7 @@ $color: rgb(5, 205, 255);
     border-radius: 10rem;
     z-index: -1;
   }
-  &:hover {
+  &:hover:not([disabled]) {
     color: #fff;
     &:before {
       width: 100%;
