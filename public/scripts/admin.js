@@ -6,7 +6,7 @@ const createOrderElement = function (order) {
   if (order.ready_by) {
     date = new Date(order.ready_by);
     time = `value="${date.toTimeString().slice(0, 5)}"`;
-    disabled = "disabled";
+    // disabled = "disabled";
   }
 
   const $order = $(`
@@ -84,7 +84,7 @@ const adminButtonListeners = function() {
       time += ":00 " + getTimeZone();
 
       $.ajax({
-        method: 'PUT',
+        method: 'POST',
         url: `/api/orders/${id}`,
         data: {id, time}
       })
@@ -107,6 +107,5 @@ $(() => {
     url: "/api/orders",
   }).done((response) => {
     renderOrders(response.orders);
-    console.log(response.orders);
   });
 });
