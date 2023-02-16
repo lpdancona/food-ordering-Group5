@@ -22,4 +22,17 @@ const getOrderDishes = (order) => {
     });
 };
 
-module.exports = { getOrders, getOrderDishes };
+const updateOrder = (order, ready_by) => {
+  return db.query(`
+    UPDATE orders
+    SET ready_by = $2
+    WHERE id = $1
+    RETURNING *;
+    `, [order, ready_by])
+    .then(data => {
+      console.log(data.rows);
+      return data.rows;
+    });
+};
+
+module.exports = { getOrders, getOrderDishes, updateOrder };
