@@ -50,56 +50,63 @@ const addToCart = (cart, id, product) => {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-  console.log(cart);
+
 };
 
-const createCartItem = function (){
+const createCartItem = function (cart){
 
   const $item = $('<div>').addClass('item');
   const $deleteBtnDiv = $('<div>').addClass('buttons');
   const $deleteBtn = $('<span>').addClass('delete-btn');
   const $deleteIcon = $('<i>').addClass('fa-solid fa-x');
-  const $imageDiv = $('<div>').addClass('image');
-  const $dishImage = $("<img/>", {
-    src:'pasta.jpeg'}).addClass('item-img');
+
   const $descriptionDiv = $('<div>').addClass("description");
-  const $dishName = $('<span>').text("Spaghetti");
-  const $dishType = $('<span>').text('Main');
+  const $dishName = $('<span>').text(cart.name);
   const $quantityContainer = $('<div>').addClass('quantity');
   const $plusBtn = $('<button type="button">').addClass('plus-btn').attr('name','button');
   const $plusIcon = $('<i>').addClass('fa-solid fa-plus');
-  const $input = $('<input type="text">').attr('name', 'name').attr('value', '1');
+  const $input = $('<input type="text">').attr('name', 'name').attr('value', cart.qty);
   const $minusBtn = $('<button type="button">').addClass('minus-btn').attr('name','button');
   const $minusIcon = $('<i>').addClass('fa-solid fa-minus');
-  const $dishCost = $('<div>').addClass('total-price').text('$549');
+  const $dishCost = $('<div>').addClass('total-price').text(cart.price);
+  console.log(cart);
 
   $deleteBtn.append($deleteIcon);
   $deleteBtnDiv.append($deleteBtn);
-  $imageDiv.append($dishImage);
-  $descriptionDiv.append($dishName,$dishType);
+  $descriptionDiv.append($dishName);
   $plusBtn.append($plusIcon);
   $minusBtn.append($minusIcon);
   $quantityContainer.append($plusBtn,$input,$minusBtn,$dishCost);
-  $item.append($deleteBtnDiv, $imageDiv, $descriptionDiv, $quantityContainer);
+  $item.append($deleteBtnDiv, $descriptionDiv, $quantityContainer);
 
   return $item;
 
 }
 
 const createShoppingCart = function() {
+
   const $shoppingCartContainer = $('<div>').addClass('shopping-cart');
   const $title = $('<div>').addClass('title').text('Shopping Cart');
-  const $item = createCartItem();
-  $shoppingCartContainer.append($title,$item);
+  let cart = {};
+  $shoppingCartContainer.append($title);
+  if (localStorage.getItem("cart")) {
+    cart = JSON.parse(localStorage.getItem("cart"));
+    for (id in cart){
+      let $item = createCartItem(cart[id]);
+      $shoppingCartContainer.append($item);
+    }
 
+  }
+
+  
   return $shoppingCartContainer;
 };
 
 const showShoppingCart =  function(){
   const $itemContainer = $('#item-container');
   $itemContainer.empty();
-  const cart = createShoppingCart();
-  $itemContainer.append(cart);
+  const shoppingCart = createShoppingCart();
+  $itemContainer.append(shoppingCart);
 };
 
 
