@@ -25,7 +25,7 @@ app.use(
   })
 );
 app.use(express.static("public"));
-
+app.use(express.json());
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require("./routes/users-api");

@@ -1,7 +1,12 @@
 const createOrderElement = function (order) {
+  let date = "";
   let time = "";
+  let disabled = "";
+
   if (order.ready_by) {
-    time = order.ready_by.split("T")[1].slice(0, 5);
+    date = new Date(order.ready_by);
+    time = `value="${date.toTimeString().slice(0, 5)}"`;
+    disabled = "disabled";
   }
 
   const $order = $(`
@@ -24,12 +29,12 @@ const createOrderElement = function (order) {
       <td class="order-actions" data-title="Action">
         <div id="time">
           <label for="appt">Select a time:</label>
-          <input type="time" id="appt" name="appt" value="${time}"/>
+          <input type="time" id="appt" name="appt" ${time}/>
         </div>
       </td>
 
       <td class="order-button" data-title="Button">
-        <button class="button" type="submit">Confirm</button>
+        <button class="button" type="submit" ${disabled}>Confirm</button>
       </td>
     </tr>
   `);
@@ -55,6 +60,7 @@ const renderOrders = function (orders) {
       url: `/api/orders/${order.id}`,
     }).done((response) => {
       renderOrderDishes(response.dishes, order.id);
+      adminButtonListeners();
       console.log(response);
     });
   });
@@ -65,6 +71,34 @@ const renderOrderDishes = function (dishes, id) {
     const $dish = createOrderDishElement(dish);
     $(`tr[data-id="${id}"]`).find("td.order-dishes").append($dish);
   });
+};
+
+const adminButtonListeners = function() {
+  const buttons = document.querySelectorAll("button");
+
+  buttons.forEach(function(button) {
+    $(button).click(function() {
+      const id = this.parentElement.parentElement.dataset.id;
+      let time = new Date().toJSON().slice(0, 10);
+      time += " " + this.parentElement.parentElement.querySelector("#appt").value;
+      time += ":00 " + getTimeZone();
+
+      $.ajax({
+        method: 'PUT',
+        url: `/api/orders/${id}`,
+        data: {id, time}
+      })
+      .done(response => {
+        location.reload();
+      });
+    });
+  });
+};
+
+function getTimeZone() {
+  const num = - (new Date().getTimezoneOffset()) / 60;
+
+  return num.toString() + ":00";
 };
 
 $(() => {

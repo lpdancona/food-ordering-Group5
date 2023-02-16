@@ -26,4 +26,16 @@ router.get('/:id', (req, res) => {
     });
 });
 
+router.put('/:id', (req, res) => {
+  orderQueries.updateOrder(req.body.id, req.body.time)
+    .then(orders => {
+      res.json({ orders });
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+})
+
 module.exports = router;
