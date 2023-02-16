@@ -119,7 +119,6 @@ $(document).ready(function() {
   $("#item-container").addClass("blackout");
 
   $( "#nav-icons" ).click(function() {
-    alert( "Handler for .click() called." );
     showShoppingCart();
     if($("#item-container").hasClass("blackout")){
       $("#item-container").removeClass("blackout").addClass("whiteout");
@@ -167,7 +166,3 @@ $(document).ready(function() {
     buttonListeners(cart);
   });
 });
-/**
- * TODO: CREATE SEPARATE FUNCTION TO ADD ITEMS TO CART: done
- * PULL DATA FROM DATABASE TO POPULATE CART ITEMS
- */
