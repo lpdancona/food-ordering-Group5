@@ -1,7 +1,10 @@
 const db = require('../connection');
 
 const getOrders = () => {
-  return db.query('SELECT * FROM orders;')
+  return db.query(`
+    SELECT o.*, u.name FROM orders o
+    JOIN users u ON u.id = o.user_id
+    ;`)
     .then(data => {
       return data.rows;
     });

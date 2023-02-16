@@ -1,8 +1,17 @@
 const createOrderElement = function (order) {
+  let time = "";
+  if (order.ready_by) {
+    time = order.ready_by.split("T")[1].slice(0, 5);
+  }
+
   const $order = $(`
     <tr class="order" data-id="${order.id}">
       <td class="order-number" data-title="Order">
         <p>#${order.id}</p>
+      </td>
+
+      <td class="order-user" data-title="User">
+        <p>${order.name}</p>
       </td>
 
       <td class="order-dishes" data-title="Dishes">
@@ -15,7 +24,7 @@ const createOrderElement = function (order) {
       <td class="order-actions" data-title="Action">
         <div id="time">
           <label for="appt">Select a time:</label>
-          <input type="time" id="appt" name="appt" />
+          <input type="time" id="appt" name="appt" value="${time}"/>
         </div>
       </td>
 
