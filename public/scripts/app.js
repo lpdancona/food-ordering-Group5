@@ -50,26 +50,62 @@ const addToCart = (cart, id, product) => {
 
   localStorage.setItem("cart", JSON.stringify(cart));
 
-
 };
 
-const createCartItem = function (cart){
+const cartListener = function(cart){
+  $("#item-container").addClass("blackout");
 
-  const $item = $('<div>').addClass('item');
+  $( "#nav-icons" ).click(function() {
+    showShoppingCart(cart);
+    if($("#item-container").hasClass("blackout")){
+      $("#item-container").removeClass("blackout").addClass("whiteout");
+    } else {
+      $("#item-container").removeClass("whiteout").addClass("blackout");
+    }
+  });
+}
+
+const addToDishQty = function (cart) {
+  $('#item-container').on('click','.plus-btn',function(e){
+    // changing quantity on shopping cart
+    $input = $(this).next();
+    const qty = parseInt($input.val());
+    $input.val(qty+1);
+
+    $description = $(this).parent('.quantity').siblings('.description');
+    const $name = $(this).parent('.quantity').siblings('.description').find('.dish-name').text();
+    const $price = $(this).siblings('.total-price').text();
+    const $id = $(this).parents('.item').attr('id');
+    addToCart(cart,$id, {$name, $price});
+ 
+  });
+   
+
+
+
+}
+/**
+ * 
+ * @param {*} cart 
+ * @returns item containing information on one dish in cart
+ */
+
+const createCartItem = function (cart, id){
+
+  const $item = $('<div>').addClass('item').attr('id',id);
   const $deleteBtnDiv = $('<div>').addClass('buttons');
   const $deleteBtn = $('<span>').addClass('delete-btn');
   const $deleteIcon = $('<i>').addClass('fa-solid fa-x');
 
   const $descriptionDiv = $('<div>').addClass("description");
-  const $dishName = $('<span>').text(cart.name);
+  const $dishName = $('<span>').addClass('dish-name').text(cart[id].name);
   const $quantityContainer = $('<div>').addClass('quantity');
   const $plusBtn = $('<button type="button">').addClass('plus-btn').attr('name','button');
   const $plusIcon = $('<i>').addClass('fa-solid fa-plus');
-  const $input = $('<input type="text">').attr('name', 'name').attr('value', cart.qty);
+  const $input = $('<input type="text">').attr('name', 'name').attr('value', cart[id].qty);
   const $minusBtn = $('<button type="button">').addClass('minus-btn').attr('name','button');
   const $minusIcon = $('<i>').addClass('fa-solid fa-minus');
-  const $dishCost = $('<div>').addClass('total-price').text(cart.price);
-  console.log(cart);
+  const $dishCost = $('<div>').addClass('total-price').text(cart[id].price);
 
   $deleteBtn.append($deleteIcon);
   $deleteBtnDiv.append($deleteBtn);
@@ -82,30 +118,39 @@ const createCartItem = function (cart){
   return $item;
 
 }
+/** 
+ * @returns shoppingCartContainer 
+ * a div containing all html elements 
+ *  needed to "render" a shopping cart on the homepage
+ */
 
-const createShoppingCart = function() {
+const createShoppingCart = function(cart) {
 
   const $shoppingCartContainer = $('<div>').addClass('shopping-cart');
   const $title = $('<div>').addClass('title').text('Shopping Cart');
-  let cart = {};
   $shoppingCartContainer.append($title);
   if (localStorage.getItem("cart")) {
-    cart = JSON.parse(localStorage.getItem("cart"));
     for (id in cart){
-      let $item = createCartItem(cart[id]);
+      let $item = createCartItem(cart, id);
       $shoppingCartContainer.append($item);
     }
 
   }
 
-  
+
   return $shoppingCartContainer;
 };
-
-const showShoppingCart =  function(){
+/**
+ * showShoppingCart function displays the shopping cart 
+ * by appending it to a empty div in 
+ * the home page
+ */
+const showShoppingCart =  function(cart){
   const $itemContainer = $('#item-container');
+  // empties container before appending cart
   $itemContainer.empty();
-  const shoppingCart = createShoppingCart();
+  // calls function to create cart
+  const shoppingCart = createShoppingCart(cart);
   $itemContainer.append(shoppingCart);
 };
 
@@ -116,17 +161,6 @@ $(document).ready(function() {
   if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
   }
-  $("#item-container").addClass("blackout");
-
-  $( "#nav-icons" ).click(function() {
-    showShoppingCart();
-    if($("#item-container").hasClass("blackout")){
-      $("#item-container").removeClass("blackout").addClass("whiteout");
-    } else {
-      $("#item-container").removeClass("whiteout").addClass("blackout");
-    }
-  });
-
   
 
   const promise1 = new Promise((resolve, reject) => {
@@ -164,5 +198,9 @@ $(document).ready(function() {
 
   Promise.all([promise1, promise2, promise3]).then(() => {
     buttonListeners(cart);
+    cartListener(cart);
+    addToDishQty(cart);
+   
   });
+
 });
