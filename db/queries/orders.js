@@ -58,7 +58,11 @@ const placeOrder = (user_id, restaurant_id, cart) => {
       }
 
       str = str.slice(0, -2) + ';';
-      db.query(str);
+      db.query(str)
+        .then(data2 => {
+          console.log(data2.rows);
+          return data2.rows;
+        });
       // return data.rows;
     });
 };
