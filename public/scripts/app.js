@@ -242,8 +242,8 @@ const createShoppingCart = function(cart) {
   return $shoppingCartContainer;
 };
 /**
- * showShoppingCart function displays the shopping cart 
- * by appending it to a empty div in 
+ * showShoppingCart function displays the shopping cart
+ * by appending it to a empty div in
  * the home page
  */
 const showShoppingCart =  function(cart){
@@ -255,6 +255,25 @@ const showShoppingCart =  function(cart){
   $itemContainer.append(shoppingCart);
 };
 
+const placeOrderButton = function(cart) {
+  $('#item-container').on('click', "#order-btn", function(e){
+    // changing quantity on shopping cart
+    console.log('button is clicked');
+    if (Object.keys(cart).length === 0) {
+      // alert
+    } else {
+      $.ajax({
+        method: 'POST',
+        url: `/api/orders`,
+        data: cart
+      })
+      .done(response => {
+        // location.reload();
+        console.log('order successfully placed');
+      });
+    }
+  });
+}
 
 $(document).ready(function() {
   let cart = {};
@@ -262,7 +281,7 @@ $(document).ready(function() {
   if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
   }
-  
+
 
   const promise1 = new Promise((resolve, reject) => {
     $.ajax({
@@ -304,5 +323,6 @@ $(document).ready(function() {
     removeDishQty(cart);
     deleteDish(cart);
    
+    placeOrderButton(cart);
   });
 });
