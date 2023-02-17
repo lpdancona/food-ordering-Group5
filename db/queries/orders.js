@@ -35,4 +35,32 @@ const updateOrder = (order, ready_by) => {
     });
 };
 
-module.exports = { getOrders, getOrderDishes, updateOrder };
+const placeOrder = (user_id, restaurant_id, cart) => {
+  let total = 0;
+  for (const key in cart) {
+    total += cart[key].price;
+  }
+
+  return db.query(`
+    INSERT INTO orders (user_id, total, restaurant_id)
+    VALUES ($1, $2, $3) RETURNING *;
+    `, [user_id, total, restaurant_id])
+    .then(data => {
+      // console.log(data.rows);
+      const id = data.rows.orders[0].id;
+      console.log(id);
+
+      let str = `INSERT INTO order_dishes (order_id, dish_id, quantity)
+      VALUES `;
+
+      for (const key in cart) {
+        str += `(${id}, ${key}, ${cart[key].quantity}), `
+      }
+
+      str = str.slice(0, -2) + ';';
+      db.query(str);
+      // return data.rows;
+    });
+};
+
+module.exports = { getOrders, getOrderDishes, updateOrder, placeOrder };
