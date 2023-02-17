@@ -86,7 +86,7 @@ const addToDishQty = function (cart) {
     const $price = $(this).siblings('.price').text();
     const $id = $(this).parents('.item').attr('id');
     addToCart(cart,$id, {$name, $price});
- 
+
   });
 }
 
@@ -107,16 +107,16 @@ const addToDishQty = function (cart) {
       }
       $input.val(qty - 1);
       deleteCartItems(cart,id);
-   
+
    });
-   
+
 
 
 
 }
 /**
- * 
- * @param {*} cart 
+ *
+ * @param {*} cart
  * @returns item containing information on one dish in cart
  */
 
@@ -148,9 +148,9 @@ const createCartItem = function (cart, id){
   return $item;
 
 }
-/** 
- * @returns shoppingCartContainer 
- * a div containing all html elements 
+/**
+ * @returns shoppingCartContainer
+ * a div containing all html elements
  *  needed to "render" a shopping cart on the homepage
  */
 
@@ -168,13 +168,13 @@ const createShoppingCart = function(cart) {
   }
 
   const $totalPrice = $('<div>').addClass('total-price').text('0');
-  const $submitBtn = $('<button type="submit" id="order-btn">Submit</button>')
+  const $submitBtn = $('<button type="submit" id="order-btn">Submit</button>');
   $shoppingCartContainer.append($totalPrice, $submitBtn);
   return $shoppingCartContainer;
 };
 /**
- * showShoppingCart function displays the shopping cart 
- * by appending it to a empty div in 
+ * showShoppingCart function displays the shopping cart
+ * by appending it to a empty div in
  * the home page
  */
 const showShoppingCart =  function(cart){
@@ -186,6 +186,25 @@ const showShoppingCart =  function(cart){
   $itemContainer.append(shoppingCart);
 };
 
+const placeOrderButton = function(cart) {
+  $('#item-container').on('click', "#order-btn", function(e){
+    // changing quantity on shopping cart
+    console.log('button is clicked');
+    if (Object.keys(cart).length === 0) {
+      // alert
+    } else {
+      $.ajax({
+        method: 'POST',
+        url: `/api/orders`,
+        data: cart
+      })
+      .done(response => {
+        // location.reload();
+        console.log('order successfully placed');
+      });
+    }
+  });
+}
 
 $(document).ready(function() {
   let cart = {};
@@ -193,7 +212,7 @@ $(document).ready(function() {
   if (localStorage.getItem("cart")) {
     cart = JSON.parse(localStorage.getItem("cart"));
   }
-  
+
 
   const promise1 = new Promise((resolve, reject) => {
     $.ajax({
@@ -233,6 +252,6 @@ $(document).ready(function() {
     cartListener(cart);
     addToDishQty(cart);
     removeDishQty(cart);
-   
+    placeOrderButton(cart);
   });
 });
