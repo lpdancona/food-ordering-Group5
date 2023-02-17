@@ -49,12 +49,12 @@ const addToCart = (cart, id, product) => {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
-  
+
 
 };
 /**
- * 
- * @param {*} cart an nest object from local storage containing 
+ *
+ * @param {*} cart an nest object from local storage containing
  * a specific customer's order details
  * @param {*} id is an id referencing a specfic dish inside the cart
  * function is responsible for deleting quantity of a specfic dish
@@ -71,7 +71,7 @@ const deleteCartItems = (cart, id) => {
 }
 
 /**
- * 
+ *
  * @param {*} cart is a nested object from local storage
  * containing details of a specfic customer's order
  * function calculates the total price of order
@@ -85,14 +85,14 @@ const calcTotalPrice = (cart)  => {
   $('.total-price').text(`$${total.toFixed(2)}`);
 }
 /**
- * 
+ *
  * @param {*} cart is a nested object from local storage
  * representing a customer's order
  * function listens to click on shopping cart icon
  * and displays shopping cart when icon is clicked
  */
 const cartListener = function(cart){
-  
+
   //  when blackout is on the shopping cart is hidden
   $("#item-container").addClass("blackout");
 
@@ -108,7 +108,7 @@ const cartListener = function(cart){
   });
 }
 /**
- * 
+ *
  * @param {*} cart is a nested object in local storage
  * representing the order details of a specific customer's order
  * function is responsible for adding to dish qty on the shopping cart
@@ -124,7 +124,7 @@ const addToDishQty = function (cart) {
     const price = $(this).siblings('.price').text();
     // updating local storage to change qty
     addToCart(cart,id, {name, price});
- 
+    calcTotalPrice(cart);
   });
 }
 /**
@@ -153,13 +153,13 @@ const addToDishQty = function (cart) {
       deleteCartItems(cart,id);
       //calculate new total price
       calcTotalPrice(cart);
-   
+
    });
  }
 /**
- * 
+ *
  * @param {*} cart is a nested object in local storage
- * representing the order details of a specific customer's order 
+ * representing the order details of a specific customer's order
  * function is responsible for deleting all instances of a dish regardless of qty
  * from the cart
  */
@@ -171,15 +171,15 @@ const addToDishQty = function (cart) {
     localStorage.setItem("cart", JSON.stringify(cart)); // update local storage with changes
     calcTotalPrice(cart); // calculate new total
 });
-   
+
 
 
 
 }
 /**
- * 
+ *
  * @param {*} cart is a nested object in local storage
- * representing the order details of a specific customer's order 
+ * representing the order details of a specific customer's order
  * @returns item containing information on a single dish in cart
  */
 
@@ -211,11 +211,11 @@ const createCartItem = function (cart, id){
   return $item;
 
 }
-/** 
+/**
  * @param {*} cart is a nested object in local storage
- * representing the order details of a specific customer's order 
- * @returns shoppingCartContainer 
- * a div containing all html elements 
+ * representing the order details of a specific customer's order
+ * @returns shoppingCartContainer
+ * a div containing all html elements
  *  needed to "render" a shopping cart on the homepage
  */
 
@@ -268,14 +268,22 @@ const placeOrderButton = function(cart) {
         data: cart
       })
       .done(response => {
-        // location.reload();
+        sessionStorage.reloadAfterPageLoad = true;
+        cart = {};
+        localStorage.setItem("cart", JSON.stringify(cart));
         console.log('order successfully placed');
+        location.reload();
       });
     }
   });
 }
 
 $(document).ready(function() {
+  if (sessionStorage.reloadAfterPageLoad === 'true') {
+    alert("Your order has been placed");
+    sessionStorage.reloadAfterPageLoad = false;
+  }
+
   let cart = {};
 
   if (localStorage.getItem("cart")) {
@@ -322,7 +330,7 @@ $(document).ready(function() {
     addToDishQty(cart);
     removeDishQty(cart);
     deleteDish(cart);
-   
+
     placeOrderButton(cart);
   });
 });

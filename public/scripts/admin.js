@@ -88,6 +88,7 @@ const adminButtonListeners = function(id) {
       data: {id, time}
     })
     .done(response => {
+      sessionStorage.reloadAfterPageLoad = true;
       location.reload();
     });
   });
@@ -106,4 +107,9 @@ $(() => {
   }).done((response) => {
     renderOrders(response.orders);
   });
+
+  if (JSON.parse(sessionStorage.reloadAfterPageLoad)) {
+    alert("Order has been updated");
+    sessionStorage.reloadAfterPageLoad = false;
+  }
 });

@@ -37,7 +37,7 @@ const updateOrder = (order, ready_by) => {
 const placeOrder = (user_id, restaurant_id, cart) => {
   let total = 0;
   for (const key in cart) {
-    total += Number(cart[key].price);
+    total += Number(cart[key].price) * Number(cart[key].qty);
   }
 
   return db.query(`
