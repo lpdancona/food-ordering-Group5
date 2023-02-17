@@ -60,7 +60,7 @@ const renderOrders = function (orders) {
       url: `/api/orders/${order.id}`,
     }).done((response) => {
       renderOrderDishes(response.dishes, order.id);
-      adminButtonListeners();
+      adminButtonListeners(order.id);
       console.log(response);
     });
   });
@@ -73,24 +73,22 @@ const renderOrderDishes = function (dishes, id) {
   });
 };
 
-const adminButtonListeners = function() {
-  const buttons = document.querySelectorAll("button");
+const adminButtonListeners = function(id) {
+  const $button = $(`tr[data-id="${id}"]`).find("button");
 
-  buttons.forEach(function(button) {
-    $(button).click(function() {
-      const id = this.parentElement.parentElement.dataset.id;
-      let time = new Date().toJSON().slice(0, 10);
-      time += " " + this.parentElement.parentElement.querySelector("#appt").value;
-      time += ":00 " + getTimeZone();
+  $button.click(function() {
+    const id = this.parentElement.parentElement.dataset.id;
+    let time = new Date().toJSON().slice(0, 10);
+    time += " " + this.parentElement.parentElement.querySelector("#appt").value;
+    time += ":00 " + getTimeZone();
 
-      $.ajax({
-        method: 'POST',
-        url: `/api/orders/${id}`,
-        data: {id, time}
-      })
-      .done(response => {
-        location.reload();
-      });
+    $.ajax({
+      method: 'POST',
+      url: `/api/orders/${id}`,
+      data: {id, time}
+    })
+    .done(response => {
+      location.reload();
     });
   });
 };

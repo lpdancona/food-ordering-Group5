@@ -30,7 +30,6 @@ const updateOrder = (order, ready_by) => {
     RETURNING *;
     `, [order, ready_by])
     .then(data => {
-      console.log(data.rows);
       return data.rows;
     });
 };
@@ -38,7 +37,7 @@ const updateOrder = (order, ready_by) => {
 const placeOrder = (user_id, restaurant_id, cart) => {
   let total = 0;
   for (const key in cart) {
-    total += cart[key].price;
+    total += Number(cart[key].price);
   }
 
   return db.query(`
@@ -46,24 +45,22 @@ const placeOrder = (user_id, restaurant_id, cart) => {
     VALUES ($1, $2, $3) RETURNING *;
     `, [user_id, total, restaurant_id])
     .then(data => {
-      // console.log(data.rows);
-      const id = data.rows.orders[0].id;
-      console.log(id);
+      // console.log(data.rows[0]);
+      const id = data.rows[0].id;
 
       let str = `INSERT INTO order_dishes (order_id, dish_id, quantity)
       VALUES `;
 
       for (const key in cart) {
-        str += `(${id}, ${key}, ${cart[key].quantity}), `
+        str += `(${id}, ${key}, ${cart[key].qty}), `
       }
 
-      str = str.slice(0, -2) + ';';
+      str = str.slice(0, -2) + 'RETURNING *;';
       db.query(str)
         .then(data2 => {
-          console.log(data2.rows);
           return data2.rows;
         });
-      // return data.rows;
+      return data.rows[0];
     });
 };
 

@@ -55,6 +55,7 @@ router.get('/:id', (req, res) => {
 router.post('/:id', (req, res) => {
   orderQueries.updateOrder(req.body.id, req.body.time)
     .then(orders => {
+      console.log('post method was called');
       clientSMS(req.body.id, req.body.time);
       res.json({ orders });
     })
@@ -66,9 +67,9 @@ router.post('/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  orderQueries.placeOrder('1', '1', req.body.cart)
+  console.log('req.body', req.body);
+  orderQueries.placeOrder('1', '1', req.body)
     .then(orders => {
-      console.log('user placed an order');
       restaurantSMS();
       res.json({ orders });
     })
