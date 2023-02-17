@@ -49,47 +49,89 @@ const addToCart = (cart, id, product) => {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+  
 
 };
+/**
+ * 
+ * @param {*} cart an nest object from local storage containing 
+ * a specific customer's order details
+ * @param {*} id is an id referencing a specfic dish inside the cart
+ * function is responsible for deleting quantity of a specfic dish
+ */
 
 const deleteCartItems = (cart, id) => {
   if (id in cart && cart[id].qty > 0){
     cart[id].qty--;
   } else {
+    // delete the entire dish from local storage if qty is equal to zero
     delete cart[id];
   }
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+/**
+ * 
+ * @param {*} cart is a nested object from local storage
+ * containing details of a specfic customer's order
+ * function calculates the total price of order
+ */
+
+const calcTotalPrice = (cart)  => {
+  let total = 0;
+  for (const key in cart) {
+    total += Number(cart[key].price) * Number(cart[key].qty)
+  }
+  $('.total-price').text(`$${total.toFixed(2)}`);
+}
+/**
+ * 
+ * @param {*} cart is a nested object from local storage
+ * representing a customer's order
+ * function listens to click on shopping cart icon
+ * and displays shopping cart when icon is clicked
+ */
 const cartListener = function(cart){
+  
+  //  when blackout is on the shopping cart is hidden
   $("#item-container").addClass("blackout");
 
   $( "#nav-icons" ).click(function() {
     showShoppingCart(cart);
+    calcTotalPrice(cart);
     if($("#item-container").hasClass("blackout")){
+      // whiteout reveals the cart
       $("#item-container").removeClass("blackout").addClass("whiteout");
     } else {
       $("#item-container").removeClass("whiteout").addClass("blackout");
     }
   });
 }
-
+/**
+ * 
+ * @param {*} cart is a nested object in local storage
+ * representing the order details of a specific customer's order
+ * function is responsible for adding to dish qty on the shopping cart
+ */
 const addToDishQty = function (cart) {
   $('#item-container').on('click','.plus-btn',function(e){
     // changing quantity on shopping cart
     $input = $(this).next();
-    const qty = parseInt($input.val());
-    $input.val(qty+1);
-
-    $description = $(this).parent('.quantity').siblings('.description');
-    const $name = $(this).parent('.quantity').siblings('.description').find('.dish-name').text();
-    const $price = $(this).siblings('.price').text();
-    const $id = $(this).parents('.item').attr('id');
-    addToCart(cart,$id, {$name, $price});
-
+    const newQty = parseInt($input.val()) +1;
+    $input.val(newQty);
+    const name = $(this).parent('.quantity').siblings('.description').find('.dish-name').text();
+    const id = $(this).parents('.item').attr('id');
+    const price = $(this).siblings('.price').text();
+    // updating local storage to change qty
+    addToCart(cart,id, {name, price});
+ 
   });
 }
-
+/**
+ * @param {*} cart is a nested object in local storage
+ * representing the order details of a specific customer's order
+ * function is responsible for removing dish qty
+ */
   const removeDishQty = function (cart) {
     $('#item-container').on('click','.minus-btn',function(e){
       // changing quantity on shopping cart
@@ -97,27 +139,48 @@ const addToDishQty = function (cart) {
       const qty = parseInt($input.val());
       const id = $(this).parents('.item').attr('id');
       console.log($input, qty,id)
+      // if qty is 0 remove dish item container from cart
       if( qty === 0){
         const $dishItem = $(this).parents(`.item#${id}`);
-        // const $dishItem = $(this).parents('.item');
-        // $('.shopping-cart').remove('.item');
         $dishItem.remove();
+        //call function to update local storage to delete dish
         deleteCartItems(cart,id);
         return;
       }
+      // remove dish quantity on screen
       $input.val(qty - 1);
+      // update local storage with single deletion of qty from cart
       deleteCartItems(cart,id);
-
+      //calculate new total price
+      calcTotalPrice(cart);
+   
    });
-
+ }
+/**
+ * 
+ * @param {*} cart is a nested object in local storage
+ * representing the order details of a specific customer's order 
+ * function is responsible for deleting all instances of a dish regardless of qty
+ * from the cart
+ */
+ const deleteDish = (cart) => {
+  $('#item-container').on('click', '.delete-btn', function() {
+    const id = this.parentElement.parentElement.id; // get product id
+    this.parentElement.parentElement.remove(); // remove the div from cart
+    delete cart[id]; // delete dish from cart
+    localStorage.setItem("cart", JSON.stringify(cart)); // update local storage with changes
+    calcTotalPrice(cart); // calculate new total
+});
+   
 
 
 
 }
 /**
- *
- * @param {*} cart
- * @returns item containing information on one dish in cart
+ * 
+ * @param {*} cart is a nested object in local storage
+ * representing the order details of a specific customer's order 
+ * @returns item containing information on a single dish in cart
  */
 
 const createCartItem = function (cart, id){
@@ -148,9 +211,11 @@ const createCartItem = function (cart, id){
   return $item;
 
 }
-/**
- * @returns shoppingCartContainer
- * a div containing all html elements
+/** 
+ * @param {*} cart is a nested object in local storage
+ * representing the order details of a specific customer's order 
+ * @returns shoppingCartContainer 
+ * a div containing all html elements 
  *  needed to "render" a shopping cart on the homepage
  */
 
@@ -166,10 +231,14 @@ const createShoppingCart = function(cart) {
     }
 
   }
-
-  const $totalPrice = $('<div>').addClass('total-price').text('0');
-  const $submitBtn = $('<button type="submit" id="order-btn">Submit</button>');
-  $shoppingCartContainer.append($totalPrice, $submitBtn);
+  const $priceDiv = $('<div>').addClass('price-div');
+  const $priceBtnDiv = $('<div>').addClass('price-btn-div');
+  const $grandTotal = $('<p>').addClass('price-label').text('Grand Total');
+  const $totalPrice = $('<p>').addClass('total-price').text('0');
+  const $submitBtn = $('<button type="submit" id="order-btn">Submit</button>')
+  $priceDiv.append($grandTotal,$totalPrice);
+  $priceBtnDiv.append($priceDiv, $submitBtn);
+  $shoppingCartContainer.append($priceBtnDiv);
   return $shoppingCartContainer;
 };
 /**
@@ -252,6 +321,8 @@ $(document).ready(function() {
     cartListener(cart);
     addToDishQty(cart);
     removeDishQty(cart);
+    deleteDish(cart);
+   
     placeOrderButton(cart);
   });
 });
