@@ -34,7 +34,7 @@ html, body{
 
 .item, .price-btn-div{
   padding: 20px 30px;
-  height: 120px;
+  height: auto;
   display: flex;
 }
 .item:nth-child(3) {
@@ -131,12 +131,23 @@ input:focus {
 }
 .price-div{
   display:flex;
-  display: flex;
-  width: fit-content;
+  align-items: flex-end;
 }
 .price-btn-div {
   justify-content: flex-end;
 
+}
+#order-btn{
+  background: transparent;
+  padding: 11px 34px;
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
+  transition-duration: 0.4s;
+}
+
+#order-btn:hover {
+  background-color: #4CAF50; /* Green */
+  color: white;
 }
 @media (max-width: 800px) {
   .shopping-cart {
