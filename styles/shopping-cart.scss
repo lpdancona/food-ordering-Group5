@@ -13,8 +13,8 @@ html, body{
 }
 .shopping-cart{
  
-  width: 750px;
-  height: 423px;
+  width: 80%;
+  height: auto;
   margin: 80px auto;
   background: #FFFFFF;
   box-shadow: 1px 2px 3px 0px rgb(0 0 0 / 10%);
@@ -32,7 +32,7 @@ html, body{
   font-weight: 400;
 }
 
-.item{
+.item, .price-btn-div{
   padding: 20px 30px;
   height: 120px;
   display: flex;
@@ -129,7 +129,15 @@ input:focus {
   color: #43484D;
   font-weight: 300;
 }
+.price-div{
+  display:flex;
+  display: flex;
+  width: fit-content;
+}
+.price-btn-div {
+  justify-content: flex-end;
 
+}
 @media (max-width: 800px) {
   .shopping-cart {
     width: 100%;
@@ -144,6 +152,7 @@ input:focus {
   .image img {
     width: 21%;
   }
+
   .image,
   .quantity,
   .description {
@@ -155,4 +164,5 @@ input:focus {
   .buttons {
     margin-right: 20px;
   }
+
 }

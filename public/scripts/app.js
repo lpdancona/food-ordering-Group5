@@ -49,8 +49,10 @@ const addToCart = (cart, id, product) => {
   }
 
   localStorage.setItem("cart", JSON.stringify(cart));
+  
 
 };
+
 
 const deleteCartItems = (cart, id) => {
   if (id in cart && cart[id].qty > 0){
@@ -61,11 +63,20 @@ const deleteCartItems = (cart, id) => {
   localStorage.setItem("cart", JSON.stringify(cart));
 }
 
+const calcTotalPrice = (cart)  => {
+  let total = 0;
+  for (const key in cart) {
+    total += Number(cart[key].price);
+  }
+  $('.total-price').text(`$${total}`);
+}
+
 const cartListener = function(cart){
   $("#item-container").addClass("blackout");
 
   $( "#nav-icons" ).click(function() {
     showShoppingCart(cart);
+    calcTotalPrice(cart);
     if($("#item-container").hasClass("blackout")){
       $("#item-container").removeClass("blackout").addClass("whiteout");
     } else {
@@ -78,14 +89,17 @@ const addToDishQty = function (cart) {
   $('#item-container').on('click','.plus-btn',function(e){
     // changing quantity on shopping cart
     $input = $(this).next();
-    const qty = parseInt($input.val());
-    $input.val(qty+1);
+    const newQty = parseInt($input.val()) +1;
+    $input.val(newQty);
+    
 
-    $description = $(this).parent('.quantity').siblings('.description');
-    const $name = $(this).parent('.quantity').siblings('.description').find('.dish-name').text();
-    const $price = $(this).siblings('.price').text();
-    const $id = $(this).parents('.item').attr('id');
-    addToCart(cart,$id, {$name, $price});
+
+
+    // $description = $(this).parent('.quantity').siblings('.description');
+    const name = $(this).parent('.quantity').siblings('.description').find('.dish-name').text();
+    const id = $(this).parents('.item').attr('id');
+    const price = $(this).siblings('.price').text();
+    addToCart(cart,id, {name, price});
  
   });
 }
@@ -166,10 +180,14 @@ const createShoppingCart = function(cart) {
     }
 
   }
-
-  const $totalPrice = $('<div>').addClass('total-price').text('0');
+  const $priceDiv = $('<div>').addClass('price-div');
+  const $priceBtnDiv = $('<div>').addClass('price-btn-div');
+  const $grandTotal = $('<p>').addClass('price-label').text('Grand Total');
+  const $totalPrice = $('<p>').addClass('total-price').text('0');
   const $submitBtn = $('<button type="submit" id="order-btn">Submit</button>')
-  $shoppingCartContainer.append($totalPrice, $submitBtn);
+  $priceDiv.append($grandTotal,$totalPrice);
+  $priceBtnDiv.append($priceDiv, $submitBtn);
+  $shoppingCartContainer.append($priceBtnDiv);
   return $shoppingCartContainer;
 };
 /**
@@ -233,6 +251,7 @@ $(document).ready(function() {
     cartListener(cart);
     addToDishQty(cart);
     removeDishQty(cart);
+    // calcTotalPrice(cart);
    
   });
 });
