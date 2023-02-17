@@ -52,6 +52,15 @@ const addToCart = (cart, id, product) => {
 
 };
 
+const deleteCartItems = (cart, id) => {
+  if (id in cart && cart[id].qty > 0){
+    cart[id].qty--;
+  } else {
+    delete cart[id];
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+}
+
 const cartListener = function(cart){
   $("#item-container").addClass("blackout");
 
@@ -74,11 +83,32 @@ const addToDishQty = function (cart) {
 
     $description = $(this).parent('.quantity').siblings('.description');
     const $name = $(this).parent('.quantity').siblings('.description').find('.dish-name').text();
-    const $price = $(this).siblings('.total-price').text();
+    const $price = $(this).siblings('.price').text();
     const $id = $(this).parents('.item').attr('id');
     addToCart(cart,$id, {$name, $price});
  
   });
+}
+
+  const removeDishQty = function (cart) {
+    $('#item-container').on('click','.minus-btn',function(e){
+      // changing quantity on shopping cart
+      $input = $(this).siblings('input');
+      const qty = parseInt($input.val());
+      const id = $(this).parents('.item').attr('id');
+      console.log($input, qty,id)
+      if( qty === 0){
+        const $dishItem = $(this).parents(`.item#${id}`);
+        // const $dishItem = $(this).parents('.item');
+        // $('.shopping-cart').remove('.item');
+        $dishItem.remove();
+        deleteCartItems(cart,id);
+        return;
+      }
+      $input.val(qty - 1);
+      deleteCartItems(cart,id);
+   
+   });
    
 
 
@@ -105,7 +135,7 @@ const createCartItem = function (cart, id){
   const $input = $('<input type="text">').attr('name', 'name').attr('value', cart[id].qty);
   const $minusBtn = $('<button type="button">').addClass('minus-btn').attr('name','button');
   const $minusIcon = $('<i>').addClass('fa-solid fa-minus');
-  const $dishCost = $('<div>').addClass('total-price').text(cart[id].price);
+  const $dishCost = $('<div>').addClass('price').text(cart[id].price);
 
   $deleteBtn.append($deleteIcon);
   $deleteBtnDiv.append($deleteBtn);
@@ -137,7 +167,9 @@ const createShoppingCart = function(cart) {
 
   }
 
-
+  const $totalPrice = $('<div>').addClass('total-price').text('0');
+  const $submitBtn = $('<button type="submit" id="order-btn">Submit</button>')
+  $shoppingCartContainer.append($totalPrice, $submitBtn);
   return $shoppingCartContainer;
 };
 /**
@@ -200,7 +232,7 @@ $(document).ready(function() {
     buttonListeners(cart);
     cartListener(cart);
     addToDishQty(cart);
+    removeDishQty(cart);
    
   });
-
 });
